@@ -1,0 +1,50 @@
+package com.example.item.model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.BatchSize;
+
+import lombok.Getter;
+
+@Entity
+@Table(name="ITEM")
+@Getter
+public class Item {
+	
+	@Id
+	private String itemCd;
+	
+	@ManyToOne
+	@JoinColumn(name="CATEGROY_CD")
+	private Categroy categroy;
+	
+	private String itemNm;
+
+	private String itemDesc;
+	
+	private int amount;
+	
+	private int price;
+	
+	protected Item() {
+		
+	}
+	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@JoinTable(name="hash_join",
+		joinColumns = @JoinColumn(name="item_cd"),
+		inverseJoinColumns = @JoinColumn(name="hash_cd")
+	)
+	private Set<HashTag> hashTage = new HashSet<HashTag>();
+	
+}
