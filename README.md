@@ -18,10 +18,7 @@
   save --  추가/변경
 
 - Service 
- get  -- 찾기
- 
- add -- 등록
- 
- modify -- 수정
- 
- remove --삭제
+  get  -- 찾기
+  add -- 등록
+  modify -- 수정
+  remove --삭제
