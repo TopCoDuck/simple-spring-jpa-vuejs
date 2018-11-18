@@ -3,7 +3,14 @@ package com.example.comn.model;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 @Embeddable
+@Getter
+@Setter
+@ToString
 public class Address {
 	@Column(name="ZIP_CODE")
 	private String zipCode;

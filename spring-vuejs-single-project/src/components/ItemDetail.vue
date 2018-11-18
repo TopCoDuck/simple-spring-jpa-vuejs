@@ -14,7 +14,7 @@
                     <span class="badge badge-pill badge-success"  v-for="hashTage in item.hashTage">{{hashTage.hashNm}}</span>
                   <div class="mb-1 text-muted">{{item.price | money }} 원</div>
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary" v-on:click="toCart">장바구니</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" v-on:click="toCart(item)">장바구니</button>
                     <button type="button" class="btn btn-sm btn-outline-secondary">구매하기</button>
                   </div>
                 </div>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 
 export default{
   data (){
@@ -51,17 +52,25 @@ export default{
   },
   methods: {
     fetchData(){
-        console.log(this.$route.params);
-        this.$http.post('http://test.sample-project.com:8080/items/'+this.$route.params.itemCd)
-        .then((response) => {
-           this.item = response.data.item;
-           this.reviews = response.data.reviews;
+        this.$http.post('/items/'+this.$route.params.itemCd)
+        .then(({data}) => {
+           this.item = data.item;
+           this.reviews = data.reviews;
         })
         .catch(()=>{})
-    },
-    toCart () {
+    },toCart(item){
+      const params = new URLSearchParams();
+      params.append('itemCd', item.itemCd);
+      params.append('quantity', 1);
 
-     }
+      this.$http.post('/cart/add',params)
+       .then(() => {
+         addItemToCart(item)
+      })
+    }
+    ,...mapActions(
+         'cart',{addItemToCart:'addItemToCart'}
+    )
   }
 
 }

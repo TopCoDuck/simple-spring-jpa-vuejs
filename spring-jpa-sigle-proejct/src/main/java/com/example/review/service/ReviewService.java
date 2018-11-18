@@ -13,8 +13,16 @@ public class ReviewService {
 	@Autowired
 	private ReviewRepository reviewRepostiory;
 	
-	
 	public List<Review> findByItemCd(String itemCd){
 		return reviewRepostiory.findByItemCd(itemCd);
 	}
+	
+	public void addReview(Review review) {
+		 reviewRepostiory.save(review);
+	}
+	
+	public void delteReview(String reviewSeq) {
+		reviewRepostiory.delete(reviewSeq);
+	}
+	
 }

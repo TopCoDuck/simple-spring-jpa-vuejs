@@ -1,15 +1,12 @@
 package com.example.comn.model;
 
-import java.util.Set;
-
-import javax.persistence.Convert;
-import javax.persistence.Embeddable;
-
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@Embeddable
-@Convert(converter=PhoneNumberConverter.class,attributeName="PHONE_NUMBER")
 @Getter
+@Setter
+@ToString
 public class PhoneNumber {
 	
 	private String fNumber;

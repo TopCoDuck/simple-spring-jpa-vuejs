@@ -9,12 +9,12 @@ import App from './App'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import {AuthService} from './service/AuthService'
+import {AuthService} from './service/authService'
 
 Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
-
+Vue.prototype.$http.defaults.baseURL = 'http://test.sample-project.com:8080';
 
 //filter
 Vue.filter('money', function (value) {

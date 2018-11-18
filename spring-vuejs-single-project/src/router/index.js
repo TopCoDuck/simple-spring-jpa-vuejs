@@ -36,7 +36,8 @@ export default new Router({
       component : Cart
     },{
       path : '/order',
-      component : Order
+      component : Order,
+      name : 'order'
     },{
       path : '/reception',
       component : Reception

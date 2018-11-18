@@ -38,16 +38,13 @@ export default {
        params.append('username', this.username);
        params.append('password', this.password);
        params.append('client_id', 'normal-app');
-      //   params.append('client_secret', 'secret');
-      //  axios.get("http://test.sample-project.com:8080/oauth/token",auth)
-      this.$http.post('http://test.sample-project.com:8080/oauth/token', params,auth)
-            .then((response)=>{
 
-                     this.$http.defaults.headers.common['Authorization'] = `Bearer `+ response.data.access_token;
-            })
-            .catch(()=>{
-
-            })
+      this.$http.post('/oauth/token', params,auth)
+        .then(({data})=>{
+              this.$http.defaults.headers.common['Authorization'] = `Bearer `+ data.access_token;
+         })
+         .catch(()=>{
+      })
 
         // var httpRequest = new XMLHttpRequest();
         //

@@ -20,7 +20,7 @@
                     <p class="card-text" @click="detail(item.itemCd)">{{ item.itemNm }}</p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
-                        <button type="button" class="btn btn-sm btn-outline-secondary" @click="addItemToCart(item)">장바구니</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary" @click="toCart(item)">장바구니</button>
                         <button type="button" class="btn btn-sm btn-outline-secondary">구매하기</button>
                       </div>
                       <small class="text-muted">{{ item.price | money }} 원</small>
@@ -46,43 +46,49 @@
 import { mapActions } from 'vuex'
 
 export default{
-    data (){
-      return {
-        items : null ,
-        searchType : 'ALL',
-        searchValue : ''
-      }
-    },
-    created (){
-      this.fetchData()
-    },
-    watch: {
-       '$route': 'fetchData'
-    },
-    methods: {
-      fetchData () {
-         this.$http.post('http://test.sample-project.com:8080/items')
-            .then((response) => {
-               this.items = response.data.content
-            })
-       },detail(itemCd){
-         this.$router.push({path:'/item-detail/'+itemCd} )
-       },search(){
-          const params = new URLSearchParams();
-          params.append('searchType', this.searchType);
-          params.append('searchValue', this.searchValue);
-         this.$http.post('http://test.sample-project.com:8080/items',params)
-
-         .then((response) => {
-             this.items = response.data.content
-         })
-       },...mapActions(
-         'cart',{addItemToCart:'addItemToCart'}
-       )
-
-
-
+  data () {
+    return {
+      items : null ,
+      searchType : 'ALL',
+      searchValue : ''
     }
+  },
+  created () {
+      this.fetchData()
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData () {
+      this.$http.post('/items')
+        .then(({data}) => {
+          this.items = data.content
+        })
+    },detail(itemCd){
+         this.$router.push({path:'/item-detail/'+itemCd} )
+    },search(){
+      const params = new URLSearchParams();
+      params.append('searchType', this.searchType);
+      params.append('searchValue', this.searchValue);
+      this.$http.post('/items',params)
+       .then(({data}) => {
+             this.items = data.content
+       })
+    },toCart(item){
+      const params = new URLSearchParams();
+      params.append('itemCd', item.itemCd);
+      params.append('quantity', 1);
+
+      this.$http.post('/cart/add',params)
+       .then(() => {
+         this.addItemToCart(item)
+      })
+    }
+    ,...mapActions(
+         'cart',{addItemToCart:'addItemToCart'}
+    )
+  }
 }
 
 </script>

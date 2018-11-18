@@ -12,8 +12,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.BatchSize;
-
 import lombok.Getter;
 
 @Entity
@@ -40,7 +38,7 @@ public class Item {
 		
 	}
 	
-	@ManyToMany(fetch=FetchType.EAGER)
+	@ManyToMany
 	@JoinTable(name="hash_join",
 		joinColumns = @JoinColumn(name="item_cd"),
 		inverseJoinColumns = @JoinColumn(name="hash_cd")

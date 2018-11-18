@@ -2,7 +2,9 @@ package com.example.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+/**
+ * Security 테스트용 Controller
+ */
 @RestController
 public class Controller {
 	@RequestMapping("/")

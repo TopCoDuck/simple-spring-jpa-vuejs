@@ -2,175 +2,96 @@
   <div class="row">
           <div class="col-md-4 order-md-2 mb-4">
             <h4 class="d-flex justify-content-between align-items-center mb-3">
-              <span class="text-muted">Your cart</span>
-              <span class="badge badge-secondary badge-pill">3</span>
+              <span class="text-muted">장바구니</span>
             </h4>
             <ul class="list-group mb-3">
-              <li class="list-group-item d-flex justify-content-between lh-condensed">
+              <li class="list-group-item d-flex justify-content-between lh-condensed" v-for="orderedItem in orderedItems">
                 <div>
-                  <h6 class="my-0">Product name</h6>
-                  <small class="text-muted">Brief description</small>
+                  <h6 class="my-0">{{orderedItem.item.itemNm }}</h6>
+                  <small class="text-muted">{{orderedItem.amount}} 개</small>
                 </div>
-                <span class="text-muted">$12</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
-                  <h6 class="my-0">Second product</h6>
-                  <small class="text-muted">Brief description</small>
-                </div>
-                <span class="text-muted">$8</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between lh-condensed">
-                <div>
-                  <h6 class="my-0">Third item</h6>
-                  <small class="text-muted">Brief description</small>
-                </div>
-                <span class="text-muted">$5</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between bg-light">
-                <div class="text-success">
-                  <h6 class="my-0">Promo code</h6>
-                  <small>EXAMPLECODE</small>
-                </div>
-                <span class="text-success">-$5</span>
+                <span class="text-muted">{{orderedItem.item.price * orderedItem.amount | money }}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between">
-                <span>Total (USD)</span>
-                <strong>$20</strong>
+                <span>총계</span>
+                <strong>{{totalSum | money}}</strong>
               </li>
             </ul>
-
-            <form class="card p-2">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Promo code">
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-secondary">Redeem</button>
-                </div>
-              </div>
-            </form>
           </div>
           <div class="col-md-8 order-md-1">
-            <h4 class="mb-3">Billing address</h4>
+            <h4 class="mb-3">구매자</h4>
             <form class="needs-validation" novalidate="">
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="firstName">First name</label>
-                  <input type="text" class="form-control" id="firstName" placeholder="" value="" required="">
+                  <label for="firstName">이름</label>
+                  <input type="text" class="form-control" v-model="receiverInfo.name">
                   <div class="invalid-feedback">
                     Valid first name is required.
                   </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                  <label for="lastName">Last name</label>
-                  <input type="text" class="form-control" id="lastName" placeholder="" value="" required="">
+              </div>
+
+              <div class="row">
+                <div class="col-md-3 mb-3">
+                  <label for="zip">우편번호</label>
+                  <input type="text" class="form-control" v-model="receiverInfo.address.zipCode">
                   <div class="invalid-feedback">
-                    Valid last name is required.
+                    Zip code required.
                   </div>
                 </div>
               </div>
-
               <div class="mb-3">
-                <label for="username">Username</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">@</span>
-                  </div>
-                  <input type="text" class="form-control" id="username" placeholder="Username" required="">
-                  <div class="invalid-feedback" style="width: 100%;">
-                    Your username is required.
-                  </div>
-                </div>
-              </div>
-
-              <div class="mb-3">
-                <label for="email">Email <span class="text-muted">(Optional)</span></label>
-                <input type="email" class="form-control" id="email" placeholder="you@example.com">
-                <div class="invalid-feedback">
-                  Please enter a valid email address for shipping updates.
-                </div>
-              </div>
-
-              <div class="mb-3">
-                <label for="address">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="">
+                <label for="address">주소</label>
+                <input type="text" class="form-control" v-model="receiverInfo.address.zipInfo">
                 <div class="invalid-feedback">
                   Please enter your shipping address.
                 </div>
               </div>
 
               <div class="mb-3">
-                <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-                <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
+                <label for="address2">상세주소 <span class="text-muted">(Optional)</span></label>
+                <input type="text" class="form-control" v-model="receiverInfo.address.zipInfoDetail">
               </div>
-
-              <div class="row">
-                <div class="col-md-5 mb-3">
-                  <label for="country">Country</label>
-                  <select class="custom-select d-block w-100" id="country" required="">
-                    <option value="">Choose...</option>
-                    <option>United States</option>
-                  </select>
+              <!-- <div class="row">
+                <div class="col-md-3 mb-3">
+                  <label for="cc-expiration">전화번호</label>
+                  <input type="text" class="form-control" v-model="receiverInfo.phoneNumber.mNumber">
                   <div class="invalid-feedback">
-                    Please select a valid country.
-                  </div>
-                </div>
-                <div class="col-md-4 mb-3">
-                  <label for="state">State</label>
-                  <select class="custom-select d-block w-100" id="state" required="">
-                    <option value="">Choose...</option>
-                    <option>California</option>
-                  </select>
-                  <div class="invalid-feedback">
-                    Please provide a valid state.
+                    Expiration date required
                   </div>
                 </div>
                 <div class="col-md-3 mb-3">
-                  <label for="zip">Zip</label>
-                  <input type="text" class="form-control" id="zip" placeholder="" required="">
+                  <label for="cc-cvv">-</label>
+                  <input type="text" class="form-control" v-model="receiverInfo.phoneNumber.mNumber">
                   <div class="invalid-feedback">
-                    Zip code required.
+                    Security code required
                   </div>
                 </div>
-              </div>
-              <hr class="mb-4">
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="same-address">
-                <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-              </div>
-              <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="save-info">
-                <label class="custom-control-label" for="save-info">Save this information for next time</label>
-              </div>
+                <div class="col-md-3 mb-3">
+                  <label for="cc-cvv">-</label>
+                  <input type="text" class="form-control" v-model="receiverInfo.phoneNumber.lNmber">
+                  <div class="invalid-feedback">
+                    Security code required
+                  </div>
+                </div>
+              </div> -->
               <hr class="mb-4">
 
-              <h4 class="mb-3">Payment</h4>
 
-              <div class="d-block my-3">
-                <div class="custom-control custom-radio">
-                  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked="" required="">
-                  <label class="custom-control-label" for="credit">Credit card</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required="">
-                  <label class="custom-control-label" for="debit">Debit card</label>
-                </div>
-                <div class="custom-control custom-radio">
-                  <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required="">
-                  <label class="custom-control-label" for="paypal">PayPal</label>
-                </div>
-              </div>
+
+              <h4 class="mb-3">결제</h4>
               <div class="row">
                 <div class="col-md-6 mb-3">
-                  <label for="cc-name">Name on card</label>
-                  <input type="text" class="form-control" id="cc-name" placeholder="" required="">
-                  <small class="text-muted">Full name as displayed on card</small>
+                  <label for="cc-name">카드 성명</label>
+                  <input type="text" class="form-control" v-model="paymentInfo.nameOnCard">
+                  <small class="text-muted">카드에 있는 이름을 표기해주세요.</small>
                   <div class="invalid-feedback">
                     Name on card is required
                   </div>
                 </div>
                 <div class="col-md-6 mb-3">
-                  <label for="cc-number">Credit card number</label>
-                  <input type="text" class="form-control" id="cc-number" placeholder="" required="">
+                  <label for="cc-number">카드번호</label>
+                  <input type="text" class="form-control" v-model="paymentInfo.cardNumber">
                   <div class="invalid-feedback">
                     Credit card number is required
                   </div>
@@ -178,23 +99,109 @@
               </div>
               <div class="row">
                 <div class="col-md-3 mb-3">
-                  <label for="cc-expiration">Expiration</label>
-                  <input type="text" class="form-control" id="cc-expiration" placeholder="" required="">
+                  <label for="cc-expiration">만료일</label>
+                  <input type="text" class="form-control" v-model="paymentInfo.expiration" >
                   <div class="invalid-feedback">
                     Expiration date required
                   </div>
                 </div>
                 <div class="col-md-3 mb-3">
                   <label for="cc-cvv">CVV</label>
-                  <input type="text" class="form-control" id="cc-cvv" placeholder="" required="">
+                  <input type="text" class="form-control" v-model="paymentInfo.cvv">
                   <div class="invalid-feedback">
                     Security code required
                   </div>
                 </div>
               </div>
               <hr class="mb-4">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input"  v-model="aggree">
+                <label class="custom-control-label" for="same-address">구매내역에 동의하시겠습니까?</label>
+              </div>
+              <hr class="mb-4">
+               위 정보는 오직 상품 구매 및 배송의 목적으로만 사용 되어질 예정입니다.
+              <button class="btn btn-primary btn-lg btn-block" type="button" @click="buy">결제하기</button>
             </form>
           </div>
         </div>
 </template>
+<script>
+export default{
+  data () {
+    return {
+      receiverInfo : {name:'',
+                      address : {
+                          zipCode:'',
+                          zipInfo:'',
+                          zipInfoDetail:''
+                        },
+                       email:'',
+                       phoneNumber:{
+                         fNumber:'',
+                         mNumber:'',
+                         lNmber:''
+                       }
+                      },
+      orderedItems : null ,
+      totalSum : 0 ,
+      paymentInfo : {nameOnCard:'',
+                     cardNumber:'',
+                     expiration:'',
+                     cvv:''} ,
+      aggree : false
+    }
+  },
+  created () {
+      this.fetchData()
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData () {
+      this.orderedItems = this.$route.params
+      this.totalSum =  this.orderedItems.reduce((sum,value) => value.item.price * value.amount + sum,0)
+
+      this.$http.post("/order/page")
+          .then(({data}) => {
+              //console.log(data)
+              console.log(data.userInfo.nickName)
+              this.receiverInfo.address = data.userInfo.address
+              this.receiverInfo.name = data.userInfo.nickName
+              this.receiverInfo.email = data.userInfo.email
+            //  this.receiverInfo.phoneNumber = data.userInfo.phoneNumber
+          })
+    },buy(){
+      let params = new URLSearchParams();
+
+      params.append('name', this.receiverInfo.name);
+      params.append('email', this.email);
+
+      params.append('address.zipCode', this.receiverInfo.address.zipCode);
+      params.append('address.zipInfo', this.receiverInfo.address.zipInfo);
+      params.append('address.zipInfoDetail', this.receiverInfo.address.zipInfoDetail);
+
+      params.append('phoneNumber.fNumber', this.receiverInfo.phoneNumber.mNumber);
+      params.append('phoneNumber.mNumber', this.receiverInfo.phoneNumber.mNumber);
+      params.append('phoneNumber.lNmber', this.receiverInfo.phoneNumber.lNmber);
+
+      params.append('nameOnCard', this.paymentInfo.nameOnCard);
+      params.append('paymentInfo', this.paymentInfo.paymentInfo);
+      params.append('expiration', this.paymentInfo.expiration);
+      params.append('cvv', this.paymentInfo.cvv);
+      params.append('totalSum',10000);
+
+      let count = 0;
+      for(let orderedItem of this.orderedItems){
+        params.append('orderedItems['+count+'].itemCd', orderedItem.itemCd);
+        params.append('orderedItems['+count+'].amount', orderedItem.amount);
+      }
+
+      this.$http.post("/order/purchase",params)
+          .then(({data}) =>{
+
+          })
+    }
+  }
+}
+</script>
