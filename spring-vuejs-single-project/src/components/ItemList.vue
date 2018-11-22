@@ -1,5 +1,5 @@
 <template>
-  <div class="album py-5 bg-light">
+  <div class="album py-5">
           <div class="container">
             <div class="row text-center">
               <label for="exampleInputEmail1" class="col-md-1">검색</label>
@@ -30,7 +30,7 @@
               </div>
             </div>
           </div>
-  <nav aria-label="Page navigation example text-center">
+<nav aria-label="Page navigation example text-center">
   <ul class="pagination">
     <li class="page-item"><a class="page-link" href="#"><</a></li>
     <li class="page-item"><a class="page-link" href="#">1</a></li>

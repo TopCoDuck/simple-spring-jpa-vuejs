@@ -1,26 +1,21 @@
 <template>
   <div class="col-md-8 order-md-2">
          <h4 class="mb-3">로그인</h4>
-         <form class="needs-validation" novalidate="">
+
            <div class="mb-3">
              <label for="username">아이디</label>
                <input type="text" class="form-control" id="username" placeholder="USER NAME" v-model="username" required="true">
-               <div class="invalid-feedback">
-                 Your username is required.
-               </div>
            </div>
            <div class="mb-3">
              <label for="password">비밀번호</label>
              <input type="password" class="form-control" id="password" placeholder="PASSWORD" v-model="password"  required="true">
-             <div class="invalid-feedback">
-               Please enter a valid email address for shipping updates.
-             </div>
            </div>
-           <button  class="btn btn-primary btn-lg btn-block"  v-on:click="login">로그인</button>
-         </form>
+           <button  class="btn btn-primary btn-lg btn-block"  @click="login()">로그인</button>
  </div>
 </template>
 <script>
+//import {Cookie} from '../service/cookieService.js'
+
 export default {
   data (){
     return {
@@ -42,6 +37,7 @@ export default {
       this.$http.post('/oauth/token', params,auth)
         .then(({data})=>{
               this.$http.defaults.headers.common['Authorization'] = `Bearer `+ data.access_token;
+              this.$cookies.set("AuthToken",data.access_token,"0");
          })
          .catch(()=>{
       })

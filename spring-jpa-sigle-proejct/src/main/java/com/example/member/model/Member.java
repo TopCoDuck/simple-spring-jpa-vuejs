@@ -11,12 +11,16 @@ import javax.persistence.Id;
 import com.example.comn.model.Address;
 import com.example.comn.model.PhoneNumber;
 import com.example.comn.model.PhoneNumberConverter;
+import com.example.member.exception.AlreadyBanMember;
 
 import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 	
 
 @Entity
 @Getter
+@ToString
 public class Member {
 	
 	@Id
@@ -40,6 +44,46 @@ public class Member {
 	@Embedded
 	private Address address;
 	
+	@Enumerated(EnumType.STRING)
+	private MemberState state;
 	
+	public void join() {
+		this.state = MemberState.JOIN;
+	}
+	
+	public void withdrawal() {
+		switch(this.state) {
+			case BAN:
+				throw new AlreadyBanMember("밴처리 된 회원입니다.");
+			default : 
+				this.state = MemberState.WITHDRAWAL;
+		}
+		
+	}
 
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public void setPhoneNumber(PhoneNumber phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+	
+	
 }

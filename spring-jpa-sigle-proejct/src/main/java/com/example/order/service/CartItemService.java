@@ -35,7 +35,7 @@ public class CartItemService {
 		System.out.println("cartItemPk.getItemCd()"+cartItemPk.getItemCd());
 		//상품 검증
 		Item item = itemRepository.findOne(cartItemPk.getItemCd());
-		if(item.getAmount() < quantity)
+		if(item.getStock() < quantity)
 			throw new LackOfQuantityException("해당 상품의 수량이 부족합니다.");
 		
 		//수량 추가

@@ -2,6 +2,7 @@ package com.example.order.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -31,6 +32,24 @@ public class OrderItem implements Serializable{
 
 	private int amount;
 	
-	private int price;
+	private long orderPrice;
+	
+	public static OrderItem createItem(Item item,int amount ,long orderPrice) {
+		
+        OrderItem orderItem = new OrderItem();
+        orderItem.item = item;
+        orderItem.amount = amount;
+        orderItem.orderPrice = orderPrice;
+        
+        item.removeStock(amount);
+        
+		return orderItem;
+	}
+	
+	public void addOrder(Order order) {
+		this.order = order;
+	}
+	
+	
 	
 }

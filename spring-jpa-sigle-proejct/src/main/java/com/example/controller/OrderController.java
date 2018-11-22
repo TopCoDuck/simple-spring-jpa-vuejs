@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,6 +14,8 @@ import com.example.member.service.MemberService;
 import com.example.order.model.OrderedItem;
 import com.example.order.model.OrderedItemList;
 import com.example.order.model.ReciverInfo;
+import com.example.order.repository.OrderViewRepository;
+import com.example.order.service.OrderService;
 import com.example.payment.model.Payment;
 import com.example.security.CurrentUser;
 
@@ -20,6 +24,11 @@ public class OrderController {
 	
 	@Autowired
 	private MemberService memberService;
+	@Autowired
+	private OrderService orderService;
+	@Autowired
+	private OrderViewRepository orderViewRepository;
+	
 	@PostMapping("/order/check")
 	public void orderCheck(OrderedItemList reqItemList) {
 		
@@ -40,17 +49,25 @@ public class OrderController {
 	public void purchase(ReciverInfo reciverInfo
 						,OrderedItemList orderedItems
 						,Payment payment) {
-		System.out.println(reciverInfo);
+		
 		for(OrderedItem  orderedItem: orderedItems.getOrderedItems()) {
 			System.out.println(orderedItem);
-		}
-		System.out.println(payment);
-		//°áÁ¦ ¹× Save
+		}		
+
+		orderService.purchase(CurrentUser.getUserName()
+								,reciverInfo
+								,orderedItems.getOrderedItems()
+							    , payment);
+
 	}
-//	
-//	@PostMapping("/order/save")
-//	public void order() {
-//		
-//	}
+	
+	@GetMapping("/orders/{orderId}")
+	public Map<String,Object> getOrderDetail(@PathVariable long orderId) {
+		System.out.println(orderId+"orderId:");
+		Map<String,Object> result = new HashMap<String,Object>();
+		result.put("order", orderService.getOrder(orderId));
+		result.put("orderItems", orderViewRepository.findOrderItemDetail(orderId));
+		return result;
+	}
 	
 }

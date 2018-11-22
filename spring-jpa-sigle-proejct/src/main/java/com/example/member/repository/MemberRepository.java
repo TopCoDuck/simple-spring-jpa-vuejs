@@ -10,6 +10,8 @@ public interface MemberRepository extends Repository<Member,String>{
 	
 	Member save(Member member);
 	
+	boolean existsByUserName(String userName); 
+	
 	void delete(String id);
 	
 }

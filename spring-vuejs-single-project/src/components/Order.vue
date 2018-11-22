@@ -135,7 +135,6 @@ export default{
                           zipInfo:'',
                           zipInfoDetail:''
                         },
-                       email:'',
                        phoneNumber:{
                          fNumber:'',
                          mNumber:'',
@@ -193,8 +192,10 @@ export default{
 
       let count = 0;
       for(let orderedItem of this.orderedItems){
-        params.append('orderedItems['+count+'].itemCd', orderedItem.itemCd);
+        params.append('orderedItems['+count+'].itemCd', orderedItem.item.itemCd);
+        params.append('orderedItems['+count+'].sum', orderedItem.item.price);
         params.append('orderedItems['+count+'].amount', orderedItem.amount);
+        count++;
       }
 
       this.$http.post("/order/purchase",params)

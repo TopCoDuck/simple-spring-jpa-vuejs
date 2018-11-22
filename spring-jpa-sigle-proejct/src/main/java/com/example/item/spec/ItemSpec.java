@@ -35,8 +35,6 @@ public class ItemSpec implements Specification<Item> {
 						 	,cb.like(root.get("itemDesc"),"%" + searchValue + "%"));
 				
 		}
-
-
 	}
 
 }

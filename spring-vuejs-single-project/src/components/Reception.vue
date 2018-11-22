@@ -2,12 +2,12 @@
 <div class="container">
   <div class="row">
     <div class="col-md-8 order-md-1">
-      <h2>구매자</h2>
+      <h2>받는 사람</h2>
       <div class="table-responsive">
             <table class="table table-bordered table-sm">
                 <tbody>
                     <tr>
-                      <td>ID</td>
+                      <td>이름</td>
                       <td>Lorem</td>
                     </tr>
                 </tbody>
@@ -18,8 +18,16 @@
             <table class="table table-bordered table-sm">
                 <tbody>
                     <tr>
-                      <td>ID</td>
-                      <td>Lorem</td>
+                      <td>우편번호</td>
+                      <td>{{reciverInfo.address.zipCode}}</td>
+                    </tr>
+                    <tr>
+                      <td>주소</td>
+                      <td>{{reciverInfo.address.zipInfo}}</td>
+                    </tr>
+                    <tr>
+                      <td>상세주소</td>
+                      <td>{{reciverInfo.address.zipInfoDetail}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -28,17 +36,44 @@
       <div class="table-responsive">
             <table class="table table-bordered table-sm">
                 <tbody>
-                    <tr>
-                      <td>ID</td>
-                      <td>Lorem</td>
+                    <tr v-for="orderItem in orderItems">
+                      <td>{{orderItem.itemNm}}</td>
+                      <td>{{orderItem.itemNm}}</td>
+                      <td>{{orderItem.amount}}</td>
+                      <td>{{orderItem.orderPrice * orderItem.amount }}</td>
                     </tr>
                 </tbody>
             </table>
       </div>
-     ※ 최근 구매 내역 5개가 보입니다.
     </div>
   </div>
 </div>
 </template>
 <script>
+export default{
+  data(){
+    return {
+      reciverInfo :{
+        address :{
+            zipCode : "",
+            zipInfo : "",
+            zipInfoDetail : ""
+        },
+        sumTotal : ""
+      },
+      orderItems : null
+    }
+  },
+  created () {
+      this.fetchData()
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData(){
+      this.$http.get("/orders/250")
+    }
+  }
+}
 </script>

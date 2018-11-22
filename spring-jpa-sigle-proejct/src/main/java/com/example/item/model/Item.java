@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.example.order.exception.LackOfQuantityException;
+
 import lombok.Getter;
 
 @Entity
@@ -30,7 +32,7 @@ public class Item {
 
 	private String itemDesc;
 	
-	private int amount;
+	private int stock;
 	
 	private int price;
 	
@@ -45,4 +47,11 @@ public class Item {
 	)
 	private Set<HashTag> hashTage = new HashSet<HashTag>();
 	
+	public void removeStock(int amount) {
+		 if(this.stock < amount) {
+			 throw new LackOfQuantityException("해당 상품의 수량이 부족합니다.");
+		 }
+		this.stock -= amount;
+	}
+
 }

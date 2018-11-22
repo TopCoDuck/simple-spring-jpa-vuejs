@@ -8,4 +8,6 @@ public class OrderedItem {
 	private String itemCd;
 	
 	private int amount;
+	
+	private long sum;
 }

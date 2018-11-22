@@ -14,7 +14,7 @@
       <tbody>
         <tr v-for="stock in stocks">
           <td><input type="checkbox" v-model="stock.item.checked" ></td>
-          <td>{{stock.item.itemNm | money }}</td>
+          <td>{{stock.item.itemNm}}</td>
           <td>{{stock.amount | money }}</td>
           <td>{{stock.item.price * stock.amount | money }}</td>
         </tr>
@@ -36,7 +36,8 @@ export default {
         let orderedItems = [];
 
         for(let stock of this.stocks){
-          params.append('orderedItems['+count+'].itemCd', stock.itemCd);
+          params.append('orderedItems['+count+'].itemCd', stock.item.itemCd);
+          params.append('orderedItems['+count+'].price', stock.item.price);
           params.append('orderedItems['+count+'].amount', stock.amount);
           orderedItems.push(stock);
         }
