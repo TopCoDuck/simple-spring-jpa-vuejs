@@ -16,7 +16,6 @@ public class SimpleAccessDeniedHandler implements AccessDeniedHandler{
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
 		accessDeniedException.printStackTrace();
 		// TODO Auto-generated method stub
-		System.out.println("test");
 	}
 
 }

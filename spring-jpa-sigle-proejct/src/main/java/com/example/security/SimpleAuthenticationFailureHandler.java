@@ -18,8 +18,7 @@ public class SimpleAuthenticationFailureHandler implements AuthenticationFailure
 	@Override
 	public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException exception) throws IOException, ServletException {
-		System.out.println("SimpleAuthenticationFailureHandler");
-		
+
 		// TODO Auto-generated method stub
         Map<String, Object> dummyData1 = new HashMap<String,Object>();
         dummyData1.put("error", true);

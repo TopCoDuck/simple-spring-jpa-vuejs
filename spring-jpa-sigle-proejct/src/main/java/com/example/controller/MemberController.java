@@ -15,7 +15,6 @@ public class MemberController {
 	
 	@PostMapping(value="/members")
 	public void createMember(Member member) {
-		System.out.println(member);
 		memberService.join(member);
 	}
 	

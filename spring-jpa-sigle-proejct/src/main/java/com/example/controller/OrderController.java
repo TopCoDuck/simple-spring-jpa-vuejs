@@ -49,10 +49,6 @@ public class OrderController {
 	public void purchase(ReciverInfo reciverInfo
 						,OrderedItemList orderedItems
 						,Payment payment) {
-		
-		for(OrderedItem  orderedItem: orderedItems.getOrderedItems()) {
-			System.out.println(orderedItem);
-		}		
 
 		orderService.purchase(CurrentUser.getUserName()
 								,reciverInfo
@@ -63,7 +59,6 @@ public class OrderController {
 	
 	@GetMapping("/orders/{orderId}")
 	public Map<String,Object> getOrderDetail(@PathVariable long orderId) {
-		System.out.println(orderId+"orderId:");
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.put("order", orderService.getOrder(orderId));
 		result.put("orderItems", orderViewRepository.findOrderItemDetail(orderId));

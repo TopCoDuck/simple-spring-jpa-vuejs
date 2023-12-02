@@ -28,13 +28,9 @@ public class SimpleAuthenticationProvider implements AuthenticationProvider{
 		String password = (String) authentication.getCredentials();
 		SimpleUserDetails simpleUserDetails = (SimpleUserDetails)simpleUserDetailsService.loadUserByUsername(username);
 		if(passwordManger.matches(password, simpleUserDetails.getPassword()))
-				throw new BadCredentialsException("ºñ¹Ð¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+				throw new BadCredentialsException("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
 		if(null != simpleUserDetails.getAuthorities()) {
 			List<SimpleGrantedAuthority> list  = (List<SimpleGrantedAuthority>) simpleUserDetails.getAuthorities();
-			for(SimpleGrantedAuthority el :list) {
-				
-				System.out.println(el.getAuthority());
-			}
 		}
 		return new UsernamePasswordAuthenticationToken(simpleUserDetails, password, simpleUserDetails.getAuthorities());
 	}

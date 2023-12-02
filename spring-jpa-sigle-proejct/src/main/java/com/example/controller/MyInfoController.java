@@ -24,7 +24,6 @@ public class MyInfoController {
 	public Map<String,Object> list(){
 		Map<String,Object> result = new HashMap<String,Object>();
 		String userName = CurrentUser.getUserName();
-		System.out.println(memberRepository.findOne(userName));
 		result.put("member", memberRepository.findOne(userName));
         result.put("orders", orderSummaryRepository.findOrderSummaryList(userName, 5));
 		

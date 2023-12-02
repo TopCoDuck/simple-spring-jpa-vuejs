@@ -17,7 +17,7 @@ import com.example.order.repository.CartItemRepository;
 import ch.qos.logback.core.net.SyslogOutputStream;
 
 /**
- * Cart PkºÎºÐ¿¡ ¿¬°ü ¹Ì»ç¿ë
+ * Cart Pkï¿½ÎºÐ¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½ï¿½
  * @author us
  *
  */
@@ -32,13 +32,12 @@ public class CartItemService {
 	
 	@Transactional
 	public void addItem(CartItemPk cartItemPk,int quantity) {
-		System.out.println("cartItemPk.getItemCd()"+cartItemPk.getItemCd());
-		//»óÇ° °ËÁõ
+		//ï¿½ï¿½Ç° ï¿½ï¿½ï¿½ï¿½
 		Item item = itemRepository.findOne(cartItemPk.getItemCd());
 		if(item.getStock() < quantity)
-			throw new LackOfQuantityException("ÇØ´ç »óÇ°ÀÇ ¼ö·®ÀÌ ºÎÁ·ÇÕ´Ï´Ù.");
+			throw new LackOfQuantityException("ï¿½Ø´ï¿½ ï¿½ï¿½Ç°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.");
 		
-		//¼ö·® Ãß°¡
+		//ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 		CartItem cartItem = cartItemRepository.findOne(cartItemPk);
 		if(cartItem !=null ) {
 			cartItem.addAmount(quantity);

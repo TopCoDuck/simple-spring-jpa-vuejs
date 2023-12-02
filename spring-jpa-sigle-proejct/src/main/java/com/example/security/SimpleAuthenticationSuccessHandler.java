@@ -19,10 +19,9 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		System.out.println("SimpleAuthenticationSuccessHandler");
         Map<String, Object> dummyData1 = new HashMap<String,Object>();
         dummyData1.put("error", false);
-        dummyData1.put("message", "Á¤»óÀûÀ¸·Î ·Î±×ÀÎ µÇ¾ú½À´Ï´Ù.");
+        dummyData1.put("message", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 		
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
